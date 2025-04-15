@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Welcome to Barita CLTV Portal</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/gsap.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+  <style>
+    :root {
+      --primary: #004c6d;
+      --secondary: #006c9e;
+      --accent: #00a8e8;
+      --text: #ffffff;
+      --shadow: rgba(0, 0, 0, 0.2);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      height: 100vh;
+      overflow: hidden;
+      color: var(--text);
+      position: relative;
+    }
+
+    #particles-js {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+      z-index: 1;
+    }
+
+    .container {
+      position: relative;
+      z-index: 2;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      text-align: center;
+      padding: 0 20px;
+    }
+
+    .logo {
+      width: 80px;
+      height: 80px;
+      background: var(--text);
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-bottom: 2rem;
+      box-shadow: 0 10px 25px rgba(0, 76, 109, 0.3);
+      opacity: 0;
+      transform: translateY(-30px);
+    }
+
+    .logo-inner {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--primary), var(--accent));
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-weight: 700;
+      font-size: 1.5rem;
+      color: var(--text);
+    }
+
+    h1 {
+      font-size: 2.8rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+      letter-spacing: 1px;
+      opacity: 0;
+      transform: translateY(-20px);
+      background: linear-gradient(90deg, #ffffff, #d4e3f2);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    p {
+      font-size: 1.2rem;
+      font-weight: 300;
+      margin-bottom: 2.5rem;
+      max-width: 600px;
+      opacity: 0;
+      transform: translateY(-10px);
+    }
+
+    .highlight {
+      color: #a5deff;
+      font-weight: 400;
+    }
+
+    .btn-container {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+
+    .btn {
+      background: linear-gradient(90deg, #ffffff, #f0f8ff);
+      color: var(--primary);
+      border: none;
+      padding: 0.9rem 2.5rem;
+      font-size: 1.1rem;
+      font-weight: 600;
+      border-radius: 50px;
+      cursor: pointer;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+      z-index: 1;
+    }
+
+    .btn::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.1));
+      transition: all 0.6s ease;
+      z-index: -1;
+    }
+
+    .btn:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 15px 25px rgba(0, 0, 0, 0.2);
+    }
+    
+    .btn:hover::before {
+      left: 100%;
+    }
+
+    .card-container {
+      position: absolute;
+      bottom: -300px;
+      right: 5%;
+      width: 300px;
+      height: 180px;
+      perspective: 1000px;
+      z-index: 3;
+    }
+
+    .card {
+      width: 100%;
+      height: 100%;
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      border-radius: 15px;
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transform-style: preserve-3d;
+      transform: rotateX(10deg) rotateY(-15deg);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .card-title {
+      font-size: 1rem;
+      font-weight: 600;
+    }
+
+    .card-chip {
+      width: 40px;
+      height: 30px;
+      background: linear-gradient(135deg, #d4af37, #f5e282);
+      border-radius: 5px;
+    }
+
+    .card-data {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+    }
+
+    .card-label {
+      font-size: 0.7rem;
+      opacity: 0.7;
+    }
+
+    .card-value {
+      font-size: 1.2rem;
+      font-weight: 600;
+    }
+
+    .card-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .stat-container {
+      position: absolute;
+      bottom: -300px;
+      left: 5%;
+      width: 220px;
+      height: 140px;
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      border-radius: 15px;
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+      padding: 20px;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      z-index: 3;
+    }
+
+    .stat-header {
+      font-size: 0.9rem;
+      margin-bottom: 15px;
+      opacity: 0.8;
+    }
+
+    .stat-value {
+      font-size: 2rem;
+      font-weight: 700;
+      margin-bottom: 5px;
+      background: linear-gradient(90deg, #ffffff, #a5deff);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .stat-label {
+      font-size: 0.8rem;
+      opacity: 0.7;
+    }
+
+    .glow {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(120px);
+    }
+
+    .glow-1 {
+      top: -10%;
+      left: -10%;
+      width: 500px;
+      height: 500px;
+      background: rgba(0, 168, 232, 0.15);
+    }
+
+    .glow-2 {
+      bottom: -20%;
+      right: -5%;
+      width: 600px;
+      height: 600px;
+      background: rgba(0, 108, 158, 0.2);
+    }
+
+    @media (max-width: 768px) {
+      h1 {
+        font-size: 2.2rem;
+      }
+      
+      p {
+        font-size: 1rem;
+      }
+      
+      .card-container, .stat-container {
+        display: none;
+      }
+    }
+    .btn::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.1));
+      transition: none;
+      animation: shine 3s infinite ease-in-out;
+    }
+
+    @keyframes shine {
+      0% {
+        left: -100%;
+      }
+      50% {
+        left: 100%;
+      }
+      100% {
+        left: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div id="particles-js"></div>
+  <div class="glow glow-1"></div>
+  <div class="glow glow-2"></div>
+
+  <div class="container">
+    <div class="logo">
+      <div class="logo-inner">B</div>
+    </div>
+    <h1>Welcome to Barita CLTV Dashboard</h1>
+    <p>Discover <span class="highlight">actionable insights</span> to drive smarter client strategies and maximize lifetime value.</p>
+    <div class="btn-container">
+      <button class="btn" onclick="window.location.href='dashboard.html'">View Dashboard</button>
+    </div>
+  </div>
+
+  <div class="card-container">
+    <div class="card">
+      <div class="card-header">
+        <div class="card-title">Client Insights</div>
+        <div class="card-chip"></div>
+      </div>
+      <div class="card-data">
+        <div class="card-label">AVERAGE CLTV</div>
+        <div class="card-value">$NUFF</div>
+      </div>
+      <div class="card-footer">
+        <div class="card-label">RETENTION RATE</div>
+        <div class="card-value">92%</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="stat-container">
+    <div class="stat-header">Total Clients</div>
+    <div class="stat-value">1,849</div>
+    <div class="stat-label">+14% from last quarter....ALLEGEDLY</div>
+  </div>
+
+  <script>
+    window.onload = function() {
+      particlesJS.load('particles-js', 'https://cdn.jsdelivr.net/gh/VincentGarreau/particles.js@master/demo/particles.json');
+
+      const tl = gsap.timeline();
+
+      tl.to(".logo", {
+        opacity: 1,
+        y: 0,
+        duration: 1.2,
+        ease: "power3.out"
+      })
+      .to("h1", {
+        opacity: 1,
+        y: 0,
+        duration: 1,
+        ease: "power3.out"
+      }, "-=0.8")
+      .to("p", {
+        opacity: 1,
+        y: 0,
+        duration: 1,
+        ease: "power3.out"
+      }, "-=0.8")
+      .to(".btn-container", {
+        opacity: 1,
+        y: 0,
+        duration: 1,
+        ease: "power3.out"
+      }, "-=0.8")
+      .to(".card-container", {
+        bottom: "15%",
+        duration: 1.5,
+        ease: "power3.out"
+      }, "-=0.5")
+      .to(".stat-container", {
+        bottom: "15%",
+        duration: 1.5,
+        ease: "power3.out"
+      }, "-=1.5");
+
+      gsap.to(".card", {
+        rotateX: 5,
+        rotateY: -5,
+        duration: 2,
+        yoyo: true,
+        repeat: -1,
+        ease: "sine.inOut"
+      });
+    };
+  </script>
+</body>
+</html>
